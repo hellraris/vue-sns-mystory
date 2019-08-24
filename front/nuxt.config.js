@@ -1,5 +1,11 @@
 module.exports = {
     head: {
-        title: 'mystroy'
+        title: 'mystroy',
+    },
+    devModules: [
+        '@nuxtjs/vuetify',
+    ],
+    vuetify: {
+
     }
-}
+};
