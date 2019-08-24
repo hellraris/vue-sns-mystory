@@ -1,0 +1,16 @@
+{
+  "name": "vue-mystory-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "hellraris",
+  "license": "ISC",
+  "dependencies": {
+    "nuxt": "^2.9.1",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nuxt"
+    }
+}
