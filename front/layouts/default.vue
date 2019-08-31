@@ -19,6 +19,7 @@
     </nav>
     <v-row>
       <v-col cols="12" xs="12" md="4">
+        <LoginForm />
       </v-col>
       <v-col cols="12" xs="12" md="8">
       </v-col>
@@ -27,7 +28,13 @@
 </template>
 
 <script>
-  export default {};
+  import LoginForm from '~/components/LoginForm'
+
+  export default {
+    components: {
+      LoginForm,
+    },
+  };
 </script>
 
 <style scoped>
