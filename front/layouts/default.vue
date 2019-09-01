@@ -5,13 +5,13 @@
         <v-toolbar-title>
           <nuxt-link to="/">mystory</nuxt-link>
         </v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-toolbar-items>
           <v-text-field prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }" />
-          <v-btn text nuxt to="/profile" :style="{ display: 'flex', alignItems: 'center' }" >
+          <v-btn text nuxt to="/profile" :style="{ display: 'flex', alignItems: 'center' }">
             <div>profile</div>
           </v-btn>
-          <v-btn text nuxt to="/signup" :style="{ display: 'flex', alignItems: 'center' }" >
+          <v-btn text nuxt to="/signup" :style="{ display: 'flex', alignItems: 'center' }">
             <div>signup</div>
           </v-btn>
         </v-toolbar-items>
