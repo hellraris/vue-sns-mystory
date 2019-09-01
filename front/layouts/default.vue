@@ -12,16 +12,17 @@
             <div>profile</div>
           </v-btn>
           <v-btn text nuxt to="/signup" :style="{ display: 'flex', alignItems: 'center' }" >
-            <div>singin</div>
+            <div>signup</div>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
     </nav>
-    <v-row>
+    <v-row no-gutters>
       <v-col cols="12" xs="12" md="4">
         <LoginForm />
       </v-col>
       <v-col cols="12" xs="12" md="8">
+        <nuxt />
       </v-col>
     </v-row>
   </v-app>
