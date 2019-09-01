@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="!me">
     <v-card>
       <v-form ref="form" v-model="vaild" @submit.prevent="onSubmitForm">
         <v-container>
@@ -9,6 +9,12 @@
           <v-btn nuxt to="/signup">singup</v-btn>
         </v-container>
       </v-form>
+    </v-card>
+  </v-container>
+  <v-container v-else>
+    <v-card>
+      {{ me.nickname }} login
+      <v-btn @click="onLogOut">logout</v-btn>
     </v-card>
   </v-container>
 </template>
@@ -29,9 +35,22 @@ export default {
       ]
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    }
+  },
   methods: {
       onSubmitForm() {
-          this.$refs.form.validate();
+          if (this.$refs.form.validate()) {
+            this.$store.dispatch('users/logIn', {
+              email: this.email,
+              nickname: 'hellraris'
+            })
+          }
+      },
+      onLogOut() {
+          this.$store.dispatch('users/logOut')
       }
   }
 };
