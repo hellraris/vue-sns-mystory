@@ -7,6 +7,9 @@ export const mutations = {
     setMe(state, payload) {
         state.me = payload;
     }, 
+    changeNickname(state, payload) {
+        state.me.nickname = payload.nickname;
+    }
 };
 
 // 非同期作業もOK
@@ -21,5 +24,8 @@ export const actions = {
     },
     logOut({ commit }, payload) {
         commit('setMe', null);
+    },
+    changeNickname({ commit }, payload) {
+        commit('changeNickname', payload);
     }
 }
