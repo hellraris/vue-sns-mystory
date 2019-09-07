@@ -3,8 +3,8 @@
     <v-image />
     <v-card-text>
       <div>
-        <h3>hellraris</h3>
-        <div>Good Morning</div>
+        <h3>{{ post.User.nickname }}</h3>
+        <div>{{ post.Content }}</div>
       </div>
     </v-card-text>
     <v-card-actions>
@@ -24,3 +24,15 @@
   </v-card>
 </template>
 
+<script>
+export default {
+  props: {
+    post: Object,
+    required: true,
+  },
+}
+</script>
+
+<style scoped>
+
+</style>
