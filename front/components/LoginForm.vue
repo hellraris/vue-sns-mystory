@@ -13,8 +13,10 @@
   </v-container>
   <v-container v-else>
     <v-card>
-      {{ me.nickname }} login
-      <v-btn @click="onLogOut">logout</v-btn>
+      <v-container>
+        {{ me.nickname }} login
+        <v-btn @click="onLogOut">logout</v-btn>
+      </v-container>
     </v-card>
   </v-container>
 </template>
