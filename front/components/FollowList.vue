@@ -1,24 +1,27 @@
 <template>
   <v-list-tile>
     <ul>
-      <li>
-        <span>hellraris</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
-      </li>
-      <li>
-        <span>nero</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
-      </li>
-      <li>
-        <span>hero</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
+      <li v-for="user in users" :key="user.id" >
+        <span>{{ user.nickname }}</span>
+        <v-icon @click="remove(user.id)">mdi-minus-circle-outline</v-icon>
       </li>
     </ul>
   </v-list-tile>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    users: {
+      type: Array,
+      required: true,
+    },
+    remove: {
+      type: Function,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style scoped>
