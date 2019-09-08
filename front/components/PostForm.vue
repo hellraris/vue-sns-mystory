@@ -48,7 +48,7 @@ export default {
         onSubmitForm() {
             if (this.$refs.form.validate()) {
                 this.$store.dispatch('posts/add', {
-                    Content: this.content,
+                    content: this.content,
                     User: {
                         nickname: this.me.nickname,
                     },
