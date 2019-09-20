@@ -4,22 +4,28 @@
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>My Profile</v-subheader>
-          <v-form>
-            <v-text-field label="nickname" required />
-            <v-btn color="blue" type="submit">edit</v-btn>
+          <v-form v-modal="valid" @submit.prevent="onChangeNickname">
+            <v-text-field
+              v-model="nickname" 
+              label="nickname" 
+              :rules="nicknameRules"
+              required />
+            <v-btn dark color="blue" type="submit">edit</v-btn>
           </v-form>
         </v-container>
       </v-card>
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>following</v-subheader>
-          <follow-list />
+          <follow-list :users="followingList" :remove="removeFollowing" />
+          <v-btn @click="loadMoreFollowings" v-if="hasMoreFollowing" dark color="blue" style="width: 100%">more</v-btn>
         </v-container>
       </v-card>
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>follower</v-subheader>
-          <follow-list />
+          <follow-list :users="followerList" :remove="removeFollower" />
+          <v-btn @click="loadMoreFollowers" v-if="hasMoreFollower" dark color="blue" style="width: 100%">more</v-btn>
         </v-container>
       </v-card>
     </v-container>
@@ -28,15 +34,58 @@
 
 <script>
 import FollowList from '~/components/FollowList'
+
 export default {
   components: {
     FollowList,
   },
   data() {
     return {
-      name: "Nuxt.js"
+      valid: false,
+      nickname: '',
+      nicknameRules: [
+        v => !!v || 'please input nickname'
+      ],
     };
-  }
+  },
+  computed: {
+    followerList() {
+      return this.$store.state.users.followerList;
+    },
+    followingList() {
+      return this.$store.state.users.followingList;
+    },
+    hasMoreFollowing() {
+      return this.$store.state.users.hasMoreFollowing;
+    },
+    hasMoreFollower() {
+      return this.$store.state.users.hasMoreFollower;
+    },
+  },
+  fetch({ store }) {
+      store.dispatch('users/loadFollowers');
+      store.dispatch('users/loadFollowings');
+  },
+  methods: {
+    onChangeNickname() {
+      this.$store.dispatch('users/changeNickname', {
+        nickname: this.nickname,
+      })
+    },
+    removeFollowing(id) {
+      this.$store.dispatch('users/removeFollowing', { id });
+    },
+    removeFollower(id) {
+      this.$store.dispatch('users/removeFollower', { id });
+    },
+    loadMoreFollowers() {
+      this.$store.dispatch('users/loadFollowers');
+    },
+    loadMoreFollowings() {
+      this.$store.dispatch('users/loadFollowings');
+    },
+  },
+  middleware: 'authenticated',
 };
 </script>
 

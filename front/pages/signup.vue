@@ -73,15 +73,39 @@ export default {
       ]
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    }
+  },
+  watch: {
+    me(value, oldValue) {
+      if (value) {
+        this.$router.push({
+          path: '/',
+        });
+      }
+    }
+  },
   methods: {
     onSubmitForm() {
       if (this.$refs.form.validate()) {
-        alert('submit success');
-      } else {
-        alert('form is not vaild');       
-      }
+        this.$store.dispatch('users/signUp', {
+          nickname: this.nickname,
+          email: this.email,
+        })
+          .then(()=>{
+            this.$router.push({
+              path: '/',
+            });
+          })
+          .catch(()=> {
+            alert('failed signup');
+          });
+      } 
     }
-  }
+  },
+  middleware: 'anonymous',
 };
 </script>
 
