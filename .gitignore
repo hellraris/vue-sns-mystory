@@ -1,4 +1,7 @@
 # dependencies
 /front/node_modules
 /front/.nuxt
+
+/back/node_modules
+
 /.vcode
