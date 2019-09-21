@@ -57,6 +57,11 @@ export const actions = {
     // context
     // { commit, dispatch, state, getters, rootState(indexのstate), rootGetters(indexのgetters)}
     signUp({ commit }, payload) {
+        this.$axios.post('http://localhost:3085/user', {
+          email: payload.email,
+          nickname: payload.nickname,
+          password: payload.password
+        });
         commit('setMe', payload);
     }, 
     logIn({ commit }, payload) {
