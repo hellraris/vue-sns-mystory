@@ -14,14 +14,21 @@ db.sequelize.sync();
 passportConfig();
 
 app.use(morgan('dev'));
-app.use(cors('http://localhost:3000'));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookie('cookiesecret'));
 app.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: 'cookiesecret'
+  secret: 'cookiesecret',
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -30,7 +37,7 @@ app.get('/', (req, res) => {
   res.send('hello')
 });
 
-app.post('/user', async (req, res) => {
+app.post('/user', async (req, res, next) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 12);
     const exUser = await db.User.findOne({
@@ -44,12 +51,27 @@ app.post('/user', async (req, res) => {
         message: 'already registered',
       });
     }
-    const newUser = await db.User.create({
+    await db.User.create({
       email: req.body.email,
       password: hash,
       nickname: req.body.nickname,
     });
-    return res.status(201).json(newUser);
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      if (info) {
+        return res.status(401).send(info.reason);
+      }
+      return req.login(user, async (err) => { // sessionにuser情報保存
+        if (err) {
+          console.error(err);
+          return next(err);
+        }
+        return res.json(user);
+      });
+    })(req, res, next);
   } catch (err) {
     console.log(err);
     next(err);
@@ -57,7 +79,7 @@ app.post('/user', async (req, res) => {
 });
 
 app.post('/user/login', (req, res, next) => {
-  passport().authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       console.error(err);
       return next(err);

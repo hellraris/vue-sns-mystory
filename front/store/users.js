@@ -57,15 +57,33 @@ export const actions = {
     // context
     // { commit, dispatch, state, getters, rootState(indexのstate), rootGetters(indexのgetters)}
     signUp({ commit }, payload) {
-        this.$axios.post('http://localhost:3085/user', {
-          email: payload.email,
-          nickname: payload.nickname,
-          password: payload.password
-        });
+      this.$axios.post('http://localhost:3085/user', {
+        email: payload.email,
+        nickname: payload.nickname,
+        password: payload.password
+      })
+      .then((data) => {
+        console.log(data);
         commit('setMe', payload);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     }, 
     logIn({ commit }, payload) {
+      this.$axios.post('http://localhost:3085/user/login', {
+        email: payload.email,
+        password: payload.password,
+      }, {
+        withCredentials: true,
+      })
+      .then((data) => {
+        console.log(data);
         commit('setMe', payload);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     },
     logOut({ commit }, payload) {
         commit('setMe', null);
