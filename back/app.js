@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const db = require('./models');
 const passportConfig = require('./passport');
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 const app = express();
 
 db.sequelize.sync();
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 
 app.listen(3085, () => {
   console.log(`server start! port ${3085}`);
